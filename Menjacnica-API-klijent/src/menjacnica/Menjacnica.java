@@ -24,7 +24,7 @@ public class Menjacnica {
 	public static final String CURRENCY_LAYER_API_URL = "http://free.currencyconverterapi.com/api/v3";
 	
 	
-	public String ucitajSaURL(String url) throws Exception {
+	public static String ucitajSaURL(String url) throws Exception {
 		URL obj=new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
@@ -46,7 +46,7 @@ public class Menjacnica {
 		return content;
 		
 	}
-	public ArrayList<Drzava> vratiDrzave() throws Exception{
+	public static ArrayList<Drzava> vratiDrzave() throws Exception{
 		String url = CURRENCY_LAYER_API_URL + service;
 		
 		Gson gson=new GsonBuilder().create();
@@ -67,7 +67,7 @@ public class Menjacnica {
 			d.setId(obj.get("id").getAsString());
 			d.setName(obj.get("name").getAsString());
 			drzave.add(d);
-			System.out.println(d.toString());
+			//System.out.println(d.toString());
 			
 		}
 		

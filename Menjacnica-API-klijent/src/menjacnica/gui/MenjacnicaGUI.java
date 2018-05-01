@@ -2,11 +2,16 @@ package menjacnica.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import menjacnica.Drzava;
+import menjacnica.Menjacnica;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -25,6 +30,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JLabel lblIznos_1;
 	private JTextField textField_1;
 	private JButton btnKonvertuj;
+	private ArrayList<Drzava> drzave;
 
 	/**
 	 * Launch the application.
@@ -44,8 +50,10 @@ public class MenjacnicaGUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public MenjacnicaGUI() {
+	public MenjacnicaGUI() throws Exception {
+		drzave=Menjacnica.vratiDrzave();
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -79,7 +87,7 @@ public class MenjacnicaGUI extends JFrame {
 	}
 	private JComboBox getComboBox() {
 		if (comboBox == null) {
-			comboBox = new JComboBox<>();
+			comboBox = new JComboBox(drzave.toArray());
 			comboBox.setBounds(44, 69, 117, 26);
 		}
 		return comboBox;
@@ -101,7 +109,7 @@ public class MenjacnicaGUI extends JFrame {
 	}
 	private JComboBox getComboBox_1() {
 		if (comboBox_1 == null) {
-			comboBox_1 = new JComboBox();
+			comboBox_1 = new JComboBox(drzave.toArray());
 			comboBox_1.setBounds(241, 69, 128, 26);
 		}
 		return comboBox_1;
