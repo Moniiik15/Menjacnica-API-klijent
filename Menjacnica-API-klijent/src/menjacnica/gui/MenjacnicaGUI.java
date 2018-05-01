@@ -142,12 +142,18 @@ public class MenjacnicaGUI extends JFrame {
 					int u = comboBoxU.getSelectedIndex();
 					String val1 = drzave.get(iz).getCurrencyId();
 					String val2 = drzave.get(u).getCurrencyId();
-					Double iznosIz = Double.parseDouble(textField.getText());
+					
+					
 					double kurs;
 					try {
+						Double iznosIz = Double.parseDouble(textField.getText());
 						kurs=Menjacnica.vratiKurs(val1, val2);
 						textField_1.setText(""+kurs* iznosIz);
-					} catch (Exception e) {
+					} 
+					 catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null, "Niste uneli iznos koji zelite da konvertujete.",
+							"", JOptionPane.INFORMATION_MESSAGE);
+					}catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Ne postoje podaci o konverziji izmedju datih valuta.",
 								"Greska", JOptionPane.ERROR_MESSAGE);
 					}

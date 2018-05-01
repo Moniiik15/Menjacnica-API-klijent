@@ -79,32 +79,32 @@ public class Menjacnica {
 		return drzave;
 	}
 	
-	public static double vratiKurs(String iz, String u) throws Exception {
+	public static double vratiKurs(String iz, String u)  {
 		String url = CURRENCY_LAYER_API_URL2 + service2 + '?' + "q=" + iz + '_' + u;
-		String sadrzaj=ucitajSaURL(url);
-		Gson gson=new GsonBuilder().create();
-		//JsonParser parser = new JsonParser();
-		//JsonObject con = parser.parse(sadrzaj).getAsJsonObject();
-		JsonObject con=gson.fromJson(sadrzaj, JsonObject.class);
-		JsonObject query = con.get("query").getAsJsonObject();
-		int count=query.get("count").getAsInt();
-		if(count!=0) {
-			JsonObject result = con.get("results").getAsJsonObject();
-			JsonObject kon=result.getAsJsonObject(iz+"_"+u).getAsJsonObject();
-			double vrednost=kon.get("val").getAsDouble();
+		String sadrzaj;
+		try {
+			sadrzaj = ucitajSaURL(url);
+			Gson gson=new GsonBuilder().create();
+			JsonObject con=gson.fromJson(sadrzaj, JsonObject.class);
+			JsonObject query = con.get("query").getAsJsonObject();
 			
-			return vrednost;
-		} 
-		else {
-			throw new RuntimeException("Ne postoje podaci o konverziji");
-			
-			
+			if(query.get("count").getAsInt()!=0) {
+				JsonObject result = con.get("results").getAsJsonObject();
+				JsonObject kon=result.getAsJsonObject(iz+"_"+u).getAsJsonObject();
+				double vrednost=kon.get("val").getAsDouble();
+				
+				return vrednost;
+			} 
+			else {
+				throw new RuntimeException("Ne postoje podaci o konverziji");
+				
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
+		return 0;	
 		
 	}
 	public static void main(String[] args) {
