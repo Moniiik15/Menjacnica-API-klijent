@@ -14,19 +14,23 @@ import menjacnica.Menjacnica;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.awt.event.ActionEvent;
 
 public class MenjacnicaGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblIzValuteZemlje;
 	private JLabel lblUValutuZemlje;
-	private JComboBox comboBox;
+	private JComboBox comboBoxIz;
 	private JLabel lblIznos;
 	private JTextField textField;
-	private JComboBox comboBox_1;
+	private JComboBox comboBoxU;
 	private JLabel lblIznos_1;
 	private JTextField textField_1;
 	private JButton btnKonvertuj;
@@ -63,10 +67,10 @@ public class MenjacnicaGUI extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getLblIzValuteZemlje());
 		contentPane.add(getLblUValutuZemlje());
-		contentPane.add(getComboBox());
+		contentPane.add(getComboBoxIz());
 		contentPane.add(getLblIznos());
 		contentPane.add(getTextField());
-		contentPane.add(getComboBox_1());
+		contentPane.add(getComboBoxU());
 		contentPane.add(getLblIznos_1());
 		contentPane.add(getTextField_1());
 		contentPane.add(getBtnKonvertuj());
@@ -85,12 +89,12 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return lblUValutuZemlje;
 	}
-	private JComboBox getComboBox() {
-		if (comboBox == null) {
-			comboBox = new JComboBox(drzave.toArray());
-			comboBox.setBounds(44, 69, 117, 26);
+	private JComboBox getComboBoxIz() {
+		if (comboBoxIz == null) {
+			comboBoxIz = new JComboBox(drzave.toArray());
+			comboBoxIz.setBounds(44, 69, 117, 26);
 		}
-		return comboBox;
+		return comboBoxIz;
 	}
 	private JLabel getLblIznos() {
 		if (lblIznos == null) {
@@ -107,12 +111,12 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return textField;
 	}
-	private JComboBox getComboBox_1() {
-		if (comboBox_1 == null) {
-			comboBox_1 = new JComboBox(drzave.toArray());
-			comboBox_1.setBounds(241, 69, 128, 26);
+	private JComboBox getComboBoxU() {
+		if (comboBoxU == null) {
+			comboBoxU = new JComboBox(drzave.toArray());
+			comboBoxU.setBounds(241, 69, 128, 26);
 		}
-		return comboBox_1;
+		return comboBoxU;
 	}
 	private JLabel getLblIznos_1() {
 		if (lblIznos_1 == null) {
@@ -132,6 +136,26 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnKonvertuj() {
 		if (btnKonvertuj == null) {
 			btnKonvertuj = new JButton("Konvertuj");
+			btnKonvertuj.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int iz = comboBoxIz.getSelectedIndex();
+					int u = comboBoxU.getSelectedIndex();
+					String val1 = drzave.get(iz).getCurrencyId();
+					String val2 = drzave.get(u).getCurrencyId();
+					Double iznosIz = Double.parseDouble(textField.getText());
+					double kurs;
+					try {
+						kurs=Menjacnica.vratiKurs(val1, val2);
+						textField_1.setText(""+kurs* iznosIz);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Ne postoje podaci o konverziji izmedju datih valuta.",
+								"Greska", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+					
+				}
+			});
 			btnKonvertuj.setBounds(156, 199, 115, 29);
 		}
 		return btnKonvertuj;

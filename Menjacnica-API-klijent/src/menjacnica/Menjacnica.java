@@ -1,8 +1,10 @@
 package menjacnica;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 
@@ -22,7 +25,8 @@ import com.google.gson.JsonObject;
 public class Menjacnica {
 	public static final String service = "/countries";
 	public static final String CURRENCY_LAYER_API_URL = "http://free.currencyconverterapi.com/api/v3";
-	
+	public static final String service2 = "/convert";
+	public static final String CURRENCY_LAYER_API_URL2 = "http://free.currencyconverterapi.com/api/v3";
 	
 	public static String ucitajSaURL(String url) throws Exception {
 		URL obj=new URL(url);
@@ -74,10 +78,38 @@ public class Menjacnica {
 		
 		return drzave;
 	}
+	
+	public static double vratiKurs(String iz, String u) throws Exception {
+		String url = CURRENCY_LAYER_API_URL2 + service2 + '?' + "q=" + iz + '_' + u;
+		String sadrzaj=ucitajSaURL(url);
+		Gson gson=new GsonBuilder().create();
+		//JsonParser parser = new JsonParser();
+		//JsonObject con = parser.parse(sadrzaj).getAsJsonObject();
+		JsonObject con=gson.fromJson(sadrzaj, JsonObject.class);
+		JsonObject query = con.get("query").getAsJsonObject();
+		int count=query.get("count").getAsInt();
+		if(count!=0) {
+			JsonObject result = con.get("results").getAsJsonObject();
+			JsonObject kon=result.getAsJsonObject(iz+"_"+u).getAsJsonObject();
+			double vrednost=kon.get("val").getAsDouble();
+			
+			return vrednost;
+		} 
+		else {
+			throw new RuntimeException("Ne postoje podaci o konverziji");
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
 	public static void main(String[] args) {
-		Menjacnica m=new Menjacnica();
 		try {
-			m.vratiDrzave();
+			vratiKurs("USD", "EUR");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
