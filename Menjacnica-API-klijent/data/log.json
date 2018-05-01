@@ -1,0 +1,50 @@
+[
+  {
+    "datumVreme": "2018-05-02 01-12-31.000274",
+    "izValuta": "BDT",
+    "uValuta": "AFN",
+    "kurs": 0.831456
+  },
+  {
+    "datumVreme": "2018-05-02 01-23-24.000430",
+    "izValuta": "BDT",
+    "uValuta": "AFN",
+    "kurs": 0.831456
+  },
+  {
+    "datumVreme": "02-05-2018 01-24-49.000404",
+    "izValuta": "RSD",
+    "uValuta": "EUR",
+    "kurs": 0.008584
+  },
+  {
+    "datumVreme": "02-05-2018 01-24-54.000912",
+    "izValuta": "RSD",
+    "uValuta": "EUR",
+    "kurs": 0.008584
+  },
+  {
+    "datumVreme": "02-05-2018 01-25-01.000255",
+    "izValuta": "RSD",
+    "uValuta": "EUR",
+    "kurs": 0.0
+  },
+  {
+    "datumVreme": "02-05-2018 01-25-09.000203",
+    "izValuta": "PGK",
+    "uValuta": "EUR",
+    "kurs": 0.254195
+  },
+  {
+    "datumVreme": "02-05-2018 01-29-11.000738",
+    "izValuta": "EUR",
+    "uValuta": "UYU",
+    "kurs": 34.264675
+  },
+  {
+    "datumVreme": "02-05-2018 01-30-02.000360",
+    "izValuta": "EUR",
+    "uValuta": "EUR",
+    "kurs": 1.0
+  }
+]

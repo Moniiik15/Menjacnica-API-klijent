@@ -1,23 +1,28 @@
 package menjacnica;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Date;
+
+
 import java.util.Map.Entry;
 
-import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
 
 
 
@@ -101,17 +106,62 @@ public class Menjacnica {
 				
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		return 0;	
 		
 	}
+	
+	public static void  serijalizacija(String iz, String u, double kurs){
+		
+		Konverzija k=new Konverzija();
+		Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+		
+		
+		Date now = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss.SSSSSS");
+		String date = format.format(now);
+		k.setDatumVreme(date);
+		k.setIzValuta(iz);
+		k.setuValuta(u);
+		k.setKurs(kurs);
+		JsonArray proslo=null;
+		try(FileReader reader=new FileReader("data/log.json")) {
+			proslo=gson.fromJson(reader, JsonArray.class);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try(FileWriter writer=new FileWriter("data/log.json")) {
+			if(proslo==null) {
+				writer.write(gson.toJson(k));
+			}
+			else {
+			String string=gson.toJson(k);
+			//iz stringa u json objekat
+			JsonObject obj=gson.fromJson(string, JsonObject.class);
+			proslo.add(obj);
+			writer.write(gson.toJson(proslo));
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+	}
+
+		
+		
+	
 	public static void main(String[] args) {
 		try {
 			vratiKurs("USD", "EUR");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

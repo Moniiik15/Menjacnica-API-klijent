@@ -3,6 +3,7 @@ package menjacnica.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.awt.event.ActionEvent;
 
@@ -133,7 +135,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return textField_1;
 	}
-	private JButton getBtnKonvertuj() {
+	private JButton getBtnKonvertuj(){
 		if (btnKonvertuj == null) {
 			btnKonvertuj = new JButton("Konvertuj");
 			btnKonvertuj.addActionListener(new ActionListener() {
@@ -144,7 +146,7 @@ public class MenjacnicaGUI extends JFrame {
 					String val2 = drzave.get(u).getCurrencyId();
 					
 					
-					double kurs;
+					double kurs=0.0;
 					try {
 						Double iznosIz = Double.parseDouble(textField.getText());
 						kurs=Menjacnica.vratiKurs(val1, val2);
@@ -156,6 +158,10 @@ public class MenjacnicaGUI extends JFrame {
 					}catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Ne postoje podaci o konverziji izmedju datih valuta.",
 								"Greska", JOptionPane.ERROR_MESSAGE);
+					}
+					finally {
+							Menjacnica.serijalizacija(val1, val2, kurs);
+						
 					}
 					
 					
