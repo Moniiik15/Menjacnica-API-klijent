@@ -68,14 +68,6 @@ public class Menjacnica {
 		for (Entry<String, JsonElement> entry : countriesJson.entrySet()) {
 			JsonObject obj=(JsonObject) entry.getValue();
 			Drzava d=new Drzava();
-			/*d.setAlpha3(obj.get("alpha3").getAsString());
-			d.setCurrencyId(obj.get("currencyId").getAsString());
-			d.setCurrencyName(obj.get("currencyName").getAsString());
-			if(obj.get("currencySymbol")!=null)
-			d.setCurrencySymbol(obj.get("currencySymbol").getAsString());
-			d.setId(obj.get("id").getAsString());
-			d.setName(obj.get("name").getAsString());
-			*/
 			d=gson.fromJson(obj, Drzava.class);
 			
 			drzave.add(d);
