@@ -12,8 +12,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 
 
@@ -58,7 +58,7 @@ public class Menjacnica {
 	public static ArrayList<Drzava> vratiDrzave() throws Exception{
 		String url = CURRENCY_LAYER_API_URL + service;
 		
-		Gson gson=new GsonBuilder().create();
+		Gson gson=new GsonBuilder().serializeNulls().create();
 		ArrayList<Drzava> drzave=new ArrayList<Drzava>();
 		JsonObject objContent=gson.fromJson(ucitajSaURL(url), JsonObject.class);
 		JsonObject countriesJson = objContent.get("results").getAsJsonObject();
@@ -68,21 +68,25 @@ public class Menjacnica {
 		for (Entry<String, JsonElement> entry : countriesJson.entrySet()) {
 			JsonObject obj=(JsonObject) entry.getValue();
 			Drzava d=new Drzava();
-			d.setAlpha3(obj.get("alpha3").getAsString());
+			/*d.setAlpha3(obj.get("alpha3").getAsString());
 			d.setCurrencyId(obj.get("currencyId").getAsString());
 			d.setCurrencyName(obj.get("currencyName").getAsString());
 			if(obj.get("currencySymbol")!=null)
 			d.setCurrencySymbol(obj.get("currencySymbol").getAsString());
 			d.setId(obj.get("id").getAsString());
 			d.setName(obj.get("name").getAsString());
+			*/
+			d=gson.fromJson(obj, Drzava.class);
+			
 			drzave.add(d);
-			//System.out.println(d.toString());
+			
 			
 		}
 		
 		
 		return drzave;
 	}
+	
 	
 	public static double vratiKurs(String iz, String u)  {
 		String url = CURRENCY_LAYER_API_URL2 + service2 + '?' + "q=" + iz + '_' + u;
@@ -152,17 +156,5 @@ public class Menjacnica {
 
 		
 		
-	}
-
-		
-		
-	
-	public static void main(String[] args) {
-		try {
-			vratiKurs("USD", "EUR");
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
 	}
 }
