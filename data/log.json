@@ -100,5 +100,47 @@
     "izValuta": "GBP",
     "uValuta": "RSD",
     "kurs": 133.19503
+  },
+  {
+    "datumVreme": "17-05-2018 00-33-34.000128",
+    "izValuta": "AFN",
+    "uValuta": "AFN",
+    "kurs": 0.0
+  },
+  {
+    "datumVreme": "17-05-2018 00-49-41.000904",
+    "izValuta": "HTG",
+    "uValuta": "INR",
+    "kurs": 1.074512
+  },
+  {
+    "datumVreme": "17-05-2018 00-49-48.000550",
+    "izValuta": "EUR",
+    "uValuta": "INR",
+    "kurs": 80.07715
+  },
+  {
+    "datumVreme": "17-05-2018 00-49-52.000382",
+    "izValuta": "EUR",
+    "uValuta": "GEL",
+    "kurs": 2.861287
+  },
+  {
+    "datumVreme": "17-05-2018 00-50-02.000660",
+    "izValuta": "UGX",
+    "uValuta": "INR",
+    "kurs": 0.018267
+  },
+  {
+    "datumVreme": "17-05-2018 00-53-11.000895",
+    "izValuta": "BDT",
+    "uValuta": "AFN",
+    "kurs": 0.838161
+  },
+  {
+    "datumVreme": "17-05-2018 01-27-44.000938",
+    "izValuta": "XOF",
+    "uValuta": "AFN",
+    "kurs": 0.127831
   }
 ]

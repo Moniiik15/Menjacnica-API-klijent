@@ -1,31 +1,29 @@
 package menjacnica.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import menjacnica.Drzava;
-import menjacnica.Menjacnica;
+import menjacnica.domenskeklase.Drzava;
+import menjacnica.gui.kontroler.GUIKontroler;
 
 import javax.swing.JLabel;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URL;
 import java.awt.event.ActionEvent;
 
-public class MenjacnicaGUI extends JFrame {
+public class GlavniProzor extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblIzValuteZemlje;
 	private JLabel lblUValutuZemlje;
@@ -39,27 +37,12 @@ public class MenjacnicaGUI extends JFrame {
 	private ArrayList<Drzava> drzave;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenjacnicaGUI frame = new MenjacnicaGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
-	public MenjacnicaGUI() throws Exception {
-		drzave=Menjacnica.vratiDrzave();
+	public GlavniProzor() throws Exception {
+		drzave = GUIKontroler.menjacnica.vratiDrzave();
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -77,6 +60,7 @@ public class MenjacnicaGUI extends JFrame {
 		contentPane.add(getTextField_1());
 		contentPane.add(getBtnKonvertuj());
 	}
+
 	private JLabel getLblIzValuteZemlje() {
 		if (lblIzValuteZemlje == null) {
 			lblIzValuteZemlje = new JLabel("Iz valute zemlje:");
@@ -84,6 +68,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return lblIzValuteZemlje;
 	}
+
 	private JLabel getLblUValutuZemlje() {
 		if (lblUValutuZemlje == null) {
 			lblUValutuZemlje = new JLabel("U valutu zemlje:");
@@ -91,6 +76,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return lblUValutuZemlje;
 	}
+
 	private JComboBox getComboBoxIz() {
 		if (comboBoxIz == null) {
 			comboBoxIz = new JComboBox(drzave.toArray());
@@ -98,6 +84,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return comboBoxIz;
 	}
+
 	private JLabel getLblIznos() {
 		if (lblIznos == null) {
 			lblIznos = new JLabel("Iznos:");
@@ -105,6 +92,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return lblIznos;
 	}
+
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
@@ -113,6 +101,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return textField;
 	}
+
 	private JComboBox getComboBoxU() {
 		if (comboBoxU == null) {
 			comboBoxU = new JComboBox(drzave.toArray());
@@ -120,6 +109,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return comboBoxU;
 	}
+
 	private JLabel getLblIznos_1() {
 		if (lblIznos_1 == null) {
 			lblIznos_1 = new JLabel("Iznos: ");
@@ -127,6 +117,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return lblIznos_1;
 	}
+
 	private JTextField getTextField_1() {
 		if (textField_1 == null) {
 			textField_1 = new JTextField();
@@ -135,7 +126,8 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return textField_1;
 	}
-	private JButton getBtnKonvertuj(){
+
+	private JButton getBtnKonvertuj() {
 		if (btnKonvertuj == null) {
 			btnKonvertuj = new JButton("Konvertuj");
 			btnKonvertuj.addActionListener(new ActionListener() {
@@ -144,28 +136,27 @@ public class MenjacnicaGUI extends JFrame {
 					int u = comboBoxU.getSelectedIndex();
 					String val1 = drzave.get(iz).getCurrencyId();
 					String val2 = drzave.get(u).getCurrencyId();
-					
-					
-					double kurs=0.0;
+
+					double kurs = 0.0;
+					boolean provera = true;
 					try {
 						Double iznosIz = Double.parseDouble(textField.getText());
-						kurs=Menjacnica.vratiKurs(val1, val2);
-						textField_1.setText(""+kurs* iznosIz);
-					} 
-					 catch (NumberFormatException e1) {
-							JOptionPane.showMessageDialog(null, "Niste uneli iznos koji zelite da konvertujete.",
-							"", JOptionPane.INFORMATION_MESSAGE);
-					}catch (Exception e) {
+						kurs = GUIKontroler.menjacnica.vratiKurs(val1, val2);
+						textField_1.setText("" + kurs * iznosIz);
+
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "Niste uneli iznos koji zelite da konvertujete.", "",
+								JOptionPane.INFORMATION_MESSAGE);
+						provera = false;
+					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Ne postoje podaci o konverziji izmedju datih valuta.",
 								"Greska", JOptionPane.ERROR_MESSAGE);
+						provera = true;
+					} finally {
+						if (provera)
+							GUIKontroler.menjacnica.serijalizacija(val1, val2, kurs);
 					}
-					finally {
-							Menjacnica.serijalizacija(val1, val2, kurs);
-						
-					}
-					
-					
-					
+
 				}
 			});
 			btnKonvertuj.setBounds(156, 199, 115, 29);
